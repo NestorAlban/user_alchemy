@@ -70,8 +70,14 @@ class Database:
 
     def get_all_active_users(self) -> List[RealDictCursor]:
         users = []
+        print(users, "4")
+        print("=====================================================")
         self.connect()
+        print(users, "4")
+        print("=====================================================")
         session = self.get_session()
+        print(users, "4")
+        print("=====================================================")
         users = session.query(
             User.id, 
             User.username, 
@@ -82,4 +88,43 @@ class Database:
         ).all()
         self.disconnect()
         return users
+    
+    def create_new_user(
+        self, id: int, username: str, email: str, is_active: bool, created_at: str, updated_at: str
+    ) -> bool:
+        success = False
+        try:
+            # 1
+            # self.connect()
+            # session = self.get_session()
+            # user = User(username = username, 
+            # email = email, 
+            # is_active = is_active,
+            # created_at = created_at,
+            # updated_at = updated_at
+            # )
+            # session.add(user)
+            # self.commit()
+            # self.disconnect()
+            # success = True
+
+            
+            # 2
+            self.connect()
+            session = self.get_session()
+            session.query(User).filter(User.id == id).add(
+                {
+                    User.username: username,
+                    User.email: email,
+                    User.is_active: is_active,
+                    User.created_at: created_at,
+                    User.updated_at: updated_at,
+                }
+            )
+            self.commit()
+            self.disconnect()
+            success = True
+        except Exception as e:
+            logging("DB ERROR", e)
+        return success
 
