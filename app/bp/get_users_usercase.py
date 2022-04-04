@@ -1,6 +1,6 @@
 from app.services.user_service import UserService
 from typing import List
-from app.models.user import User
+from app.models import User
 
 
 class UserGetter:

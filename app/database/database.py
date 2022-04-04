@@ -2,8 +2,7 @@ import logging
 
 from fastapi import Path
 
-
-from app.models.user import User
+from app.models import User
 
 from dotenv import load_dotenv
 from psycopg2 import Error
@@ -24,13 +23,6 @@ from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.orm.exc import NoResultFound
-from sqlalchemy import (
-    Column, 
-    Integer, 
-    String, 
-    DateTime, 
-    Boolean
-)
 
 logger = logging.getLogger(__name__)
 logger.level = logger.setLevel(logging.INFO)

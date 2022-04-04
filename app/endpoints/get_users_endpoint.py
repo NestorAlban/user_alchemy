@@ -8,9 +8,9 @@ from typing import Optional
 
 from typing import Final
 
-from app.bp.get_users_usercase import UserGetter
+from app.bp import UserGetter
 
-from app.models.user import User
+from app.models import User
 
 
 router = APIRouter()
@@ -19,9 +19,17 @@ GET_USER_ERROR_MESSAGE: Final = "ERROR IN users ENDPOINT"
 USERS_ENDPOINT_SUMMARY: Final = "Show active Users"
 USERS_ENDPOINT_PATH: Final = "/users"
 
+class GetUsersResponse(BaseModel):
+    id: int = Field(...)
+    name: str = Field(...)
+    email: str = Field(...)
+    is_active: Optional[str] = Field()
+    created_at: Optional[str] = Field()
+    updated_at: Optional[str] = Field()
+
 @router.get(
     path=USERS_ENDPOINT_PATH,
-    response_model=List[User],
+    response_model=List[GetUsersResponse],
     status_code=status.HTTP_200_OK,
     summary=USERS_ENDPOINT_SUMMARY,
     tags=["Users"],
@@ -34,7 +42,7 @@ def get_users():
         users = user_getter.run()
         print(users, "1")
         print("=====================================================")
-        users_response = [User(**user.dict()) for user in users]
+        users_response = [User(user) for user in users]
         # users_response = [GetUsersResponse(
         #     id=user.id,
         #     name=user.name,

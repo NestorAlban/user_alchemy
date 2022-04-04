@@ -1,6 +1,6 @@
-from app.database.database import Database
+from app.database import Database
 from typing import List
-from app.models.user import User
+from app.models import User
 
 
 class UserService:

@@ -1,2 +1,1 @@
-
-from app.models.user import User
+from .user_service import UserService
