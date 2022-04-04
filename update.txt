@@ -1,0 +1,20 @@
+    # 1
+    user = session.query(User).filter(User.id == 1).first()
+
+    user.username = 'Nuevo username'
+    user.email = 'nuevoemail@example.com'
+    session.add(user)
+    print(user)
+    # 2
+    session.query(User).filter(
+        User.id == 2
+    ).update(
+        {
+            User.username: 'nuevo valor 2',
+            User.email: 'nuevo2@example.com'
+        }
+    )
+
+    session.commit()
+    users = session.query(User.id, User.username, User.email).all()
+    print(users)

@@ -1,0 +1,47 @@
+    # SELECT * FROM users:
+    #acá regresa instancias, cuando usamos la clase
+    #users = session.query(User).all()
+
+
+    # SELECT * FROM users WHERE id >=2 and username = 'User3'
+    #users = session.query(User.id, User.username, User.email).filter(
+    #    User.id >= 2
+    #).filter(
+    #    User.username == 'User3'
+    #)
+
+    #al usar argumentos, nos regresa tuplas
+    # users = session.query(User.id, User.username, User.email).filter(
+    #    User.id >= 2
+    # )
+    # for user in users:
+    #     print(user)
+
+    # users = session.query(User).filter(
+    #    User.id >= 2
+    # )
+    # for user in users:
+    #     print(user.created_at)
+
+
+    #metodo first
+    user = session.query(User).filter(
+        User.id == 1
+    ).first()
+
+    if user:
+        print(user)
+    else: 
+        #saldra un none
+        print("User doesn't exist")
+
+    #metodo one
+    try:
+        user = session.query(User).filter(
+            User.id == 1
+        ).one()
+
+        print(user)
+    except NoResultFound as error:
+        #saldra un error
+        print("User doesn't exist")
